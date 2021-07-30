@@ -1,0 +1,28 @@
+h3{
+    background-color: rgb(255, 0, 98);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 0;
+}
+
+.div_speed { float: left; } 
+.div_speed_img , .div_volume_img { width: 200px; border-radius: 100px; } 
+
+ .div_volume { float: right; }
+
+ body
+ {
+     background-size: cover;
+ }
+
+ footer
+ {
+     background-color: floralwhite;
+     color: orangered;
+     margin-bottom: 0px;
+     position: fixed;
+     bottom: 0px;
+     width: 100%;
+     line-height: 2.5;
+     text-align: center;
+ }
