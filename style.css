@@ -1,5 +1,5 @@
 h3{
-    background-color: darkturquoise;
+    background-color: rgb(255, 0, 98);
     padding-top: 5px;
     padding-bottom: 5px;
     margin: 0;
@@ -7,7 +7,7 @@ h3{
 
 .div_speed { float: left; } 
 .div_speed_img , .div_volume_img { width: 200px; border-radius: 100px; } 
-#speed , #volume { font-size: 23px; margin: 25px; }
+
  .div_volume { float: right; }
 
  body
@@ -25,11 +25,4 @@ h3{
      width: 100%;
      line-height: 2.5;
      text-align: center;
- }
-
- canvas
- {
-     border-width: 7px;
-     border-color: whitesmoke;
-     border-style: solid;
  }

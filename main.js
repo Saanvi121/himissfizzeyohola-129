@@ -1,38 +1,36 @@
-song = ""
+hp = ""
+pan = ""
 leftWristX = ""
 leftWristY = ""
 rightWristX = ""
 rightWristY = ""
-scoreLeftWrist = ""
-scoreRightWrist = ""
+scoreLeftWrist = 0
+scoreRightWrist = 0
+songName = ""
 
-function preload()
-{
-song = loadSound("music.mp3")
+function preload() {
+    hp = loadSound("harrypotter.mp3"); 
+    pan = loadSound("peterpan.mp3"); 
 }
 
-function setup()
-{
-canvas = createCanvas(650,500)
-canvas.position(400,150)
 
-video = createCapture(VIDEO)
-video.hide()
+function setup() {
+    canvas = createCanvas(600, 450)
+    canvas.center()
 
-poseNet = ml5.poseNet(video, modelLoaded)
-poseNet.on('pose', gotPoses)
+    video = createCapture(VIDEO)
+    video.hide()
+
+    poseNet = ml5.poseNet(video, modelLoaded)
+    poseNet.on('pose', gotPoses)
 }
 
-function gotPoses(results)
-{
-    if(results.length > 0)
-    {
+function modelLoaded() {
+    console.log("MoDeL lOaDeD hUmAnS")
+}
 
-scoreLeftWrist = results[0].pose.keypoints[9].score
-scoreRightWrist = results[0].pose.keypoints[10].score
-console.log(scoreLeftWrist)
-console.log(scoreRightWrist)
-
+function gotPoses(results) {
+    if (results.length > 0) {
         console.log(results)
         leftWristX = results[0].pose.leftWrist.x
         leftWristY = results[0].pose.leftWrist.y
@@ -42,82 +40,33 @@ console.log(scoreRightWrist)
         rightWristY = results[0].pose.rightWrist.y
         console.log("Right wrist x = " + rightWristX)
         console.log("Right wrist y = " + rightWristY)
+        scoreLeftWrist = results[0].pose.keypoints[9].score
+        scoreRightWrist = results[0].pose.keypoints[10].score
     }
 }
 
-function modelLoaded()
-{
-    console.log("MoDeL lOaDeD hUmAnS")
-}
 
-function draw()
-{
-    image(video,0,0,650,500)
+    function draw() {
+        image(video, 0, 0, 600, 450)
 
-    fill("red")
-    stroke("black")
+        fill("red")
+        stroke("black")
 
-if(scoreLeftWrist > 0.2)
-{
-    circle(leftWristX, leftWristY, 20)
-    leftY = Number(leftWristY)
-    LeftY = floor(leftY)
-    LeftWristY = LeftY/500
-    document.getElementById("volume").innerHTML = "Volume- " + LeftWristY
-song.setVolume(LeftWristY)
-console.log(LeftWristY)
-}
-
-if(scoreRightWrist > 0.2)
-{
-    circle(rightWristX, rightWristY, 20)
-    rightY = Number(rightWristY)
-    RightY = floor(rightY)
-    
-    if(RightY => 0 && RightY <= 100)
-    {
-        song.rate(0.5)
-        document.getElementById("speed").innerHTML = "Speed- 0.5 - Very slow"
+        if(scoreLeftWrist > 0.2)
+        {
+            circle(leftWristX, leftWristY, 20)
+            pan.play()
+            hp.stop()
+            songName = "Peter Pan Song"
+            document.getElementById("song_header").innerHTML = "Song Name: " + songName
+            checkpan = "playing"
+        }
+        if (scoreRightWrist > 0.2)
+        {
+            circle(rightWristX, rightWristY, 20)
+            pan.stop()
+            hp.play()
+            songName = "Harry Potter Theme Song"
+            document.getElementById("song_header").innerHTML = "Song Name: " + songName
+        }
     }
-
-    if(RightY > 100 && RightY <= 200)
-    {
-        song.rate(1)
-        document.getElementById("speed").innerHTML = "Speed- 1 - Normal"
-    }
-
-    if(RightY > 200 & RightY <= 300)
-    {
-        song.rate(1.5)
-        document.getElementById("speed").innerHTML = "Speed- 1.5 - Fast"
-    }
-
-    if(RightY > 300 & RightY <= 400)
-    {
-        song.rate(2)
-        document.getElementById("speed").innerHTML = "Speed- 2 - Double"
-    }
-
-    if(RightY > 400 & RightY <= 500)
-    {
-        song.rate(2.5)
-        document.getElementById("speed").innerHTML = "Speed- 2.5 - Very Fast"
-    }
-}
-}
-
-function play()
-{
-    song.play()
-    song.rate(1)
-}
-
-function pause()
-{
-    song.pause()
-}
-
-function stop()
-{
-    song.stop()
-}
